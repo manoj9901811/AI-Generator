@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>AI Image Generator</title>
+
+  <style>
+
+    body{
+      font-family: Arial;
+      background:#0f172a;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      height:100vh;
+      margin:0;
+    }
+
+    .container{
+      width:400px;
+      background:#1e293b;
+      padding:25px;
+      border-radius:15px;
+      text-align:center;
+      box-shadow:0px 0px 20px rgba(0,0,0,0.3);
+    }
+
+    h1{
+      color:white;
+      margin-bottom:20px;
+    }
+
+    input{
+      width:100%;
+      padding:12px;
+      margin-top:10px;
+      box-sizing:border-box;
+      border:none;
+      border-radius:8px;
+      background:#334155;
+      color:white;
+      outline:none;
+      font-size:16px;
+    }
+
+    input::placeholder{
+      color:#cbd5e1;
+    }
+
+    button{
+      width:100%;
+      margin-top:15px;
+      padding:12px;
+      background:#2563eb;
+      color:white;
+      border:none;
+      border-radius:8px;
+      cursor:pointer;
+      font-size:16px;
+    }
+
+    button:hover{
+      background:#1d4ed8;
+    }
+
+    img{
+      width:100%;
+      margin-top:20px;
+      border-radius:10px;
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <div id="root"></div>
+
+  <!-- React Library -->
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+
+  <!-- React DOM -->
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+  <!-- Babel -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <script type="text/babel">
+
+    function App() {
+
+      // React State
+      const [prompt, setPrompt] = React.useState("");
+
+      const [image, setImage] = React.useState("");
+
+      // JavaScript Function
+      function generateImage() {
+
+        if(prompt === ""){
+          alert("Please enter prompt");
+          return;
+        }
+
+        const imageUrl =
+          "https://image.pollinations.ai/prompt/" + prompt;
+
+        setImage(imageUrl);
+      }
+
+      return (
+
+        <div className="container">
+
+          <h1>AI Image Generator</h1>
+
+          <input
+            type="text"
+            placeholder="Enter Prompt"
+            value={prompt}
+
+            onChange={(e) => setPrompt(e.target.value)}
+
+            onKeyDown={(e) => {
+              if(e.key === "Enter"){
+                generateImage();
+              }
+            }}
+          />
+
+          <button onClick={generateImage}>
+            Generate Image
+          </button>
+
+          {
+            image &&
+            <img src={image} alt="Generated Image" />
+          }
+
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(
+      document.getElementById("root")
+    ).render(<App />);
+
+  </script>
+
+</body>
+
+</html>
